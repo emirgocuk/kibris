@@ -8,9 +8,9 @@ export default () => {
     const [mobileOpen, setMobileOpen] = useState(false);
 
     return (
-        <header className="px-4 py-2 bg-stone-50 w-full flex items-center justify-between border-b-2 border-stone-300  z-10 shadow-sm">
+        <header className="px-4 py-4 bg-stone-50 w-full flex items-center justify-between border-b-2 border-stone-300 z-10 shadow-sm sticky top-0">
             <Link to="/">
-                <img className="h-10" src={Logo} alt="Kıbrıs Kültür Derneği logo" />
+                <img className="h-12" src={Logo} alt="Kıbrıs Kültür Derneği logo" />
             </Link>
 
             {/* Hamburger butonu */}
@@ -24,9 +24,9 @@ export default () => {
             {/* Menü */}
             <nav
                 className={`
-                    flex gap-4 h-10
+                    flex gap-4 h-12
                     max-[1162px]:absolute max-[1162px]:top-full max-[1162px]:left-0
-                    max-[1162px]:w-full max-[1162px]:bg-stone-50 max-[1162px]:flex-col max-[1162px]:p-4
+                    max-[1162px]:w-full max-[1162px]:bg-stone-50 max-[1162px]:flex-col max-[1162px]:p-4 max-[1162px]:h-auto
                     ${mobileOpen ? "max-[1162px]:flex" : "max-[1162px]:hidden"}
                 `}
             >

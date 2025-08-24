@@ -1,4 +1,3 @@
-// src/pages/home/index.tsx
 import { useEffect, useState } from "react";
 import News from "~/components/News";
 import Conflict from "~/components/Conflict";
@@ -9,10 +8,10 @@ import Section from "~/components/Section";
 
 type Post = {
     id: number;
-    header: string;
+    title: string;
     content: string;
-    category: { id: number; name: string };
-    cover?: string;
+    slug: string;
+    author?: string;
 };
 
 export default () => {
@@ -23,19 +22,13 @@ export default () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                // @ts-ignore
-                const newsData = await get<{ posts: Post[] }>("/news?limit=3");
-                // @ts-ignore
+                const newsData = await get<Post[]>("/news?limit=3");
                 setNewsPosts(newsData || []);
 
-                // @ts-ignore
-                const bookData = await get<{ posts: Post[] }>("/books?limit=3");
-                // @ts-ignore
+                const bookData = await get<Post[]>("/books?limit=3");
                 setBookPosts(bookData || []);
 
-                // @ts-ignore
-                const conflictData = await get<{ posts: Post[] }>("/conflict?limit=6");
-                // @ts-ignore
+                const conflictData = await get<Post[]>("/conflict?limit=6");
                 setConflictPosts(conflictData || []);
             } catch (err) {
                 console.error("Error fetching posts:", err);
@@ -43,48 +36,50 @@ export default () => {
         };
 
         document.title = "Ana Sayfa | Kıbrıs Türk Kültür Derneği";
-
         fetchPosts();
     }, []);
 
     return (
-        <div className="flex flex-col gap-12">
+        <div className="flex flex-col gap-16 py-8">
 
-            {/* Haberler */}
+            {/* Haberler ve Yan Menü */}
             <Section>
-                <div className="grid grid-cols-1 lg:grid-cols-[1fr_384px] gap-6">
-                    <div>
-                        <h1 className="text-2xl font-bold mb-4">Haberler</h1>
-                        <div className="flex flex-col divide-y divide-gray-300">
+                <div className="container mx-auto grid grid-cols-1 lg:grid-cols-3 gap-12">
+                    <div className="lg:col-span-2">
+                        <h1>Haberler</h1>
+                        <div className="flex flex-col divide-y divide-gray-200">
                             {newsPosts.map((post) => (
-                                // @ts-ignore
                                 <News key={post.id} {...post} />
                             ))}
                         </div>
                     </div>
-                    <Side />
+                    <div className="lg:col-span-1">
+                        <Side />
+                    </div>
                 </div>
             </Section>
 
             {/* Kıbrıs Uyuşmazlığı */}
             <Section>
-                <h1 className="text-2xl font-bold mb-4">Kıbrıs Uyuşmazlığı</h1>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    {conflictPosts.map((post) => (
-                        // @ts-ignore
-                        <Conflict key={post.id} {...post} />
-                    ))}
+                <div className="container mx-auto">
+                    <h1>Kıbrıs Uyuşmazlığı</h1>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                        {conflictPosts.map((post) => (
+                            <Conflict key={post.id} {...post} />
+                        ))}
+                    </div>
                 </div>
             </Section>
 
             {/* Kitap Tanıtımı */}
             <Section>
-                <h1 className="text-2xl font-bold mb-4">Kitap Tanıtımı</h1>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                    {bookPosts.map((post) =>
-                        // @ts-ignore
-                        post && <Book key={post.id} post={post} />
-                    )}
+                <div className="container mx-auto">
+                    <h1>Kütüphanemizden Seçmeler</h1>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+                        {bookPosts.map((post) =>
+                            post && <Book key={post.id} post={post} />
+                        )}
+                    </div>
                 </div>
             </Section>
 

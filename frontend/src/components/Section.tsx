@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 
 export default ({ children }: { children?: ReactNode }) => {
-    return <section className="px-4 py-2">{children}</section>;
+    // Sadece dikey boşluk (padding) bırakıyoruz.
+    return <section className="py-8">{children}</section>;
 };

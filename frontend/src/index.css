@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 @import "tailwindcss";
 
 @theme {
@@ -8,46 +8,29 @@
 
 @layer base {
     h1 {
-        @apply text-2xl relative font-semibold after:block after:h-0.5 after:w-16 after:bg-bayrak after:absolute after:top-full after:left-0
+        @apply text-3xl relative font-bold text-gray-800 pb-2 mb-4;
+    }
+
+    h1::after {
+        content: '';
+        @apply block h-1 w-20 bg-bayrak absolute bottom-0 left-0;
     }
 
     button {
-        @apply border bg-stone-200 text-stone-500 border-current rounded-sm px-2 py-1 hover:text-stone-50 hover:bg-stone-700 cursor-pointer transition-colors
+        @apply border bg-stone-200 text-stone-600 border-stone-300 rounded-md px-4 py-2 hover:text-stone-900 hover:bg-stone-300 cursor-pointer transition-all duration-200 ease-in-out shadow-sm;
     }
 
-    input, option {
-        @apply w-full border border-stone-300 rounded-lg placeholder:text-stone-400 outline-none focus:border-none px-2 py-1 appearance-none
+    input, select, option {
+        @apply w-full border border-stone-300 rounded-lg placeholder:text-stone-400 outline-none focus:ring-2 focus:ring-bayrak focus:border-transparent px-3 py-2 transition-all;
     }
-
-    select {
-        @apply w-full
-    }
-
 }
 
 @layer components {
-    button.active {
-        @apply bg-green-300 border-green-700 text-stone-950;
-    }
-
-    .custom-checkbox {
-        @apply w-6 h-6 border-2 border-stone-400 rounded-md cursor-pointer relative;
-    }
-
-    .custom-checkbox.checked {
-        @apply bg-blue-500 border-blue-600;
-    }
-
-    .custom-checkbox svg {
-        @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 text-white hidden;
-    }
-
-    .custom-checkbox.checked svg {
-        @apply block;
-    }
-
     .content img {
-        @apply w-full h-auto xl:max-w-xl mx-auto;
+        @apply w-full h-auto xl:max-w-2xl mx-auto rounded-lg shadow-md my-4;
     }
 
+    .content p {
+        @apply mb-4 leading-relaxed;
+    }
 }
