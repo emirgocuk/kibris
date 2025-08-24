@@ -1,0 +1,22 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const post_controller_1 = require("../controllers/post.controller");
+const validate_middleware_1 = __importDefault(require("../middlewares/validate.middleware"));
+const checkPermission_middleware_1 = __importDefault(require("../middlewares/checkPermission.middleware"));
+const auth_middleware_1 = __importDefault(require("../middlewares/auth.middleware"));
+const upload_middleware_1 = __importDefault(require("../middlewares/upload.middleware"));
+const post_schema_1 = require("../schemas/post.schema");
+const router = (0, express_1.Router)();
+router.get("/", post_controller_1.getAll);
+router.get("/:id", post_controller_1.getByID);
+router.get("/user/:id", post_controller_1.getByUser);
+router.post("/", auth_middleware_1.default, (0, checkPermission_middleware_1.default)("canCreatePost"), upload_middleware_1.default.single("photo"), (0, validate_middleware_1.default)(post_schema_1.postSchema), post_controller_1.postPost);
+router.put("/:id", auth_middleware_1.default, (0, checkPermission_middleware_1.default)("canEditPost"), upload_middleware_1.default.single("photo"), post_controller_1.putPost);
+router.delete("/:id", auth_middleware_1.default, (0, checkPermission_middleware_1.default)("canDeletePost"), post_controller_1.deletePost);
+router.post("/approve/:id", auth_middleware_1.default, (0, checkPermission_middleware_1.default)("canApprovePost"), post_controller_1.approvePost);
+router.get("/:name/last", post_controller_1.getLastByCategoryName);
+exports.default = router;
